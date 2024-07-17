@@ -30,9 +30,9 @@ public class CaregiverResponse {
     private List<Certification> certifications;//인증 이후에 업데이트
     private List<CareReservationResponse> careReservations;
     private List<WorkHistory> caregiverWorkHistories;
+    private Double averageRating;
 
-
-    public CaregiverResponse(Caregiver caregiver, String noData){
+    public CaregiverResponse(Caregiver caregiver, String noData) {
         this.id = caregiver.getId();
         this.name = caregiver.getName();
         this.phone = caregiver.getPhone();
@@ -43,6 +43,7 @@ public class CaregiverResponse {
         this.careerDescription = caregiver.getCareerDescription();
         this.certifications = caregiver.getCertifications();
         this.careReservations = caregiver.getCareReservations().stream().map(CareReservationResponse::new).toList();
+        this.averageRating = caregiver.getAverageRating();
     }
 
     public CaregiverResponse(Caregiver entity) {

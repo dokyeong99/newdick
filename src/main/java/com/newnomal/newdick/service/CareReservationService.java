@@ -12,6 +12,8 @@ import com.newnomal.newdick.repositroy.CaregiverRepository;
 import com.newnomal.newdick.repositroy.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -58,21 +60,6 @@ public class CareReservationService {
         return ResponseEntity.ok(new RestResult<>("SUCCESS", new CareReservationResponse(reservation.get())));
     }
 
-    public ResponseEntity<RestResult<Object>> getReservationsByUserId(Long userId) {
-        List<CareReservation> reservations = careReservationRepository.findByUserId(userId);
-        List<CareReservationResponse> responses = reservations.stream()
-                .map(CareReservationResponse::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(new RestResult<>("SUCCESS", responses));
-    }
-
-    public ResponseEntity<RestResult<Object>> getReservationsByCaregiverId(Long caregiverId) {
-        List<CareReservation> reservations = careReservationRepository.findByCaregiverId(caregiverId);
-        List<CareReservationResponse> responses = reservations.stream()
-                .map(CareReservationResponse::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(new RestResult<>("SUCCESS", responses));
-    }
 
     public ResponseEntity<RestResult<Object>> updateReservation(Long reservationId, CareReservationRequest careReservationRequest) {
         Optional<CareReservation> optionalCareReservation = careReservationRepository.findById(reservationId);
@@ -93,5 +80,17 @@ public class CareReservationService {
         }
         careReservationRepository.deleteById(reservationId);
         return ResponseEntity.ok(new RestResult<>("SUCCESS", "Reservation deleted successfully"));
+    }
+
+    public ResponseEntity<RestResult<Page<CareReservationResponse>>> getReservationsByUserId(Long userId, Pageable pageable) {
+        Page<CareReservation> reservations = careReservationRepository.findByUserId(userId, pageable);
+        Page<CareReservationResponse> responses = reservations.map(CareReservationResponse::new);
+        return ResponseEntity.ok(new RestResult<>("SUCCESS", responses));
+    }
+
+    public ResponseEntity<RestResult<Page<CareReservationResponse>>> getReservationsByCaregiverId(Long caregiverId, Pageable pageable) {
+        Page<CareReservation> reservations = careReservationRepository.findByCaregiverId(caregiverId, pageable);
+        Page<CareReservationResponse> responses = reservations.map(CareReservationResponse::new);
+        return ResponseEntity.ok(new RestResult<>("SUCCESS", responses));
     }
 }

@@ -3,8 +3,11 @@ package com.newnomal.newdick.controller;
 
 import com.newnomal.newdick.common.RestResult;
 import com.newnomal.newdick.domain.request.*;
+import com.newnomal.newdick.domain.response.CareReservationResponse;
 import com.newnomal.newdick.service.CareReservationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,13 +28,15 @@ public class CareReservationController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<RestResult<Object>> getReservationsByUserId(@PathVariable Long userId) {
-        return careReservationService.getReservationsByUserId(userId);
+    public ResponseEntity<RestResult<Page<CareReservationResponse>>> getReservationsByUserId(
+            @PathVariable Long userId, Pageable pageable) {
+        return careReservationService.getReservationsByUserId(userId, pageable);
     }
 
     @GetMapping("/caregiver/{caregiverId}")
-    public ResponseEntity<RestResult<Object>> getReservationsByCaregiverId(@PathVariable Long caregiverId) {
-        return careReservationService.getReservationsByCaregiverId(caregiverId);
+    public ResponseEntity<RestResult<Page<CareReservationResponse>>> getReservationsByCaregiverId(
+            @PathVariable Long caregiverId, Pageable pageable) {
+        return careReservationService.getReservationsByCaregiverId(caregiverId, pageable);
     }
 
     @PutMapping("/{reservationId}")

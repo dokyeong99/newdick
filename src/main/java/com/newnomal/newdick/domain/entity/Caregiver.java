@@ -40,6 +40,13 @@ public class Caregiver {
     @OneToMany(fetch = FetchType.EAGER)
     private List<WorkHistory> WorkHistories;
 
+    private Double totalRating = 0.0;
+    private Integer reviewCount = 0;
+    private Double averageRating = 0.0;
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
     public Caregiver(CaregiverSignUpRequest caregiverSignUpRequest){
         this.email = caregiverSignUpRequest.getEmail();
         this.password = caregiverSignUpRequest.getPassword();
@@ -50,6 +57,23 @@ public class Caregiver {
         this.address = caregiverSignUpRequest.getAddress();
         this.city = caregiverSignUpRequest.getCity();
         this.careerDescription = caregiverSignUpRequest.getCareerDescription();
+    }
+
+    public void updateRating(int oldRating, int newRating) {
+        this.totalRating = this.totalRating - oldRating + newRating;
+        this.averageRating = this.reviewCount > 0 ? this.totalRating / this.reviewCount : 0.0;
+    }
+
+    public void addReview(int rating) {
+        this.totalRating += rating;
+        this.reviewCount++;
+        this.averageRating = this.totalRating / this.reviewCount;
+    }
+
+    public void removeReview(int rating) {
+        this.totalRating -= rating;
+        this.reviewCount--;
+        this.averageRating = this.reviewCount > 0 ? this.totalRating / this.reviewCount : 0.0;
     }
 
 }
