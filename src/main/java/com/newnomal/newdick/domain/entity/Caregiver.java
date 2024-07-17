@@ -5,7 +5,6 @@ import com.newnomal.newdick.domain.converter.DoubleListToJsonConverter;
 import com.newnomal.newdick.domain.request.CaregiverSignUpRequest;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,7 +38,7 @@ public class Caregiver {
     @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CareReservation> careReservations;
     @OneToMany(fetch = FetchType.EAGER)
-    private List<CaregiverWorkHistory> caregiverWorkHistories;
+    private List<WorkHistory> WorkHistories;
 
     public Caregiver(CaregiverSignUpRequest caregiverSignUpRequest){
         this.email = caregiverSignUpRequest.getEmail();
@@ -51,7 +50,6 @@ public class Caregiver {
         this.address = caregiverSignUpRequest.getAddress();
         this.city = caregiverSignUpRequest.getCity();
         this.careerDescription = caregiverSignUpRequest.getCareerDescription();
-
     }
 
 }

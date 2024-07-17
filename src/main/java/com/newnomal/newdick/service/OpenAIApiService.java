@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class OpenAIApiService {
 
-    private String openAiApiKey="";
+    private String openAiApiKey="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";
 
 
     public List<Double>  generateCareerDescriptionVector(String careerDescription) {

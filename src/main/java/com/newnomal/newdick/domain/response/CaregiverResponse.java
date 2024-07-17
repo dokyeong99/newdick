@@ -1,8 +1,8 @@
 package com.newnomal.newdick.domain.response;
 
 
-import com.newnomal.newdick.domain.entity.CareReservation;
 import com.newnomal.newdick.domain.entity.Caregiver;
+import com.newnomal.newdick.domain.entity.WorkHistory;
 import com.newnomal.newdick.domain.entity.Certification;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +29,8 @@ public class CaregiverResponse {
     private String careerDescription;//elastic search랑 연동되는 파라미터
     private List<Certification> certifications;//인증 이후에 업데이트
     private List<CareReservationResponse> careReservations;
+    private List<WorkHistory> caregiverWorkHistories;
+
 
     public CaregiverResponse(Caregiver caregiver, String noData){
         this.id = caregiver.getId();
