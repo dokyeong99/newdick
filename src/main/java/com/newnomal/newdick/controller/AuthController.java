@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
+@CrossOrigin("*")
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/patient/signup")
-    public ResponseEntity<RestResult<Object>> patientSignUp(
+    @PostMapping("/user/signup")
+    public ResponseEntity<RestResult<Object>> userSignUp(
             @RequestBody UserSignUpRequest userSignUpRequest) {
-        return authService.patientSignUp(userSignUpRequest);
+        return authService.userSignUp(userSignUpRequest);
     }
 
     @PostMapping("/caregiver/signup")
@@ -29,11 +30,11 @@ public class AuthController {
         return authService.caregiverSignUp(caregiverSignUpRequest);
     }
 
-    @PostMapping("/patient/login")
-    public ResponseEntity<RestResult<Object>> patientLogIn(
+    @PostMapping("/user/login")
+    public ResponseEntity<RestResult<Object>> userLogIn(
             @RequestBody UserLoginRequest userLoginRequest
     ) {
-        return authService.patientLogIn(userLoginRequest);
+        return authService.userLogIn(userLoginRequest);
     }
     @PostMapping("/caregiver/login")
     public ResponseEntity<RestResult<Object>> caregiverLogIn(

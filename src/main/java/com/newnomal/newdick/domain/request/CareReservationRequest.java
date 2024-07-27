@@ -17,11 +17,15 @@ public class CareReservationRequest {
     private String reservationReason;
     private String reservationRequest;
     private String reservationLocation;
-    private Long caregiverId;
     private Long userId;
     private String patientName;
     private String patientGender;
     private LocalDate patientBirthDate;
     private String patientHeight;
     private String patientWeight;
+
+    //new field
+    private String diseaseName = "";
+    private String UnAcceptedBehavior = "";
+    private String RecentDiseaseData = "";
 }

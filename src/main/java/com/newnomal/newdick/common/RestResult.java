@@ -1,5 +1,8 @@
 package com.newnomal.newdick.common;
 
+import lombok.Getter;
+
+@Getter
 public class RestResult<T> {
     private String status;
     private T data;

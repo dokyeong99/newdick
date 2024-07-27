@@ -38,8 +38,6 @@ public class User {
         this.phone = userSignUpRequest.getPhone();
         this.gender = userSignUpRequest.getGender();
         this.birthDate = LocalDate.parse(userSignUpRequest.getBirthDate());
-        this.address = userSignUpRequest.getAddress();
-        this.city = userSignUpRequest.getCity();
     }
 
 }

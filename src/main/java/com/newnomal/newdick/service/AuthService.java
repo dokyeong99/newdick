@@ -30,7 +30,7 @@ public class AuthService {
 
     //1. 이메일 중복 체크 ->에러 시에 에러 반환
     //2. 데이터 삽입
-    public ResponseEntity<RestResult<Object>> patientSignUp(
+    public ResponseEntity<RestResult<Object>> userSignUp(
             UserSignUpRequest userSignUpRequest) {
         Optional<User> byEmail = userRepository.findByEmail(userSignUpRequest.getEmail());
         if(byEmail.isPresent()) {
@@ -61,7 +61,7 @@ public class AuthService {
 
     //1. 이메일, 비밀번호 체크 ->에러 시에 에러 반환
     //2. patient아이디 반환
-    public ResponseEntity<RestResult<Object>> patientLogIn(
+    public ResponseEntity<RestResult<Object>> userLogIn(
             UserLoginRequest userLoginRequest) {
         Optional<User> byEmailAndPassword = userRepository.findByEmailAndPassword(userLoginRequest.getEmail(), userLoginRequest.getPassword());
         if(byEmailAndPassword.isEmpty()) {

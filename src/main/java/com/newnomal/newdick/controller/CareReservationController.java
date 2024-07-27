@@ -14,12 +14,38 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/care-reservation")
+@CrossOrigin("*")
 public class CareReservationController {
     private final CareReservationService careReservationService;
 
-    @PostMapping
+    //간병 예약 등록 -> 간병인 요청 전 상태 state 0
+    @PostMapping("/careReservation")
     public ResponseEntity<RestResult<Object>> createReservation(@RequestBody CareReservationRequest request) {
         return careReservationService.createReservation(request);
+    }
+
+    //간병인 예약 요청 -> 특정 간병인 요청 상태 state 1
+    @PostMapping("/careRequest")
+    public ResponseEntity<RestResult<Object>> reservationCaregiverRequest(@RequestBody CaregiverReservationRequest request) {
+        return null;
+    }
+
+    //간병인 예약 등록 -> 간병인이 허가하면 state 2
+    @PostMapping("/careAccept")
+    public ResponseEntity<RestResult<Object>> reservationAccept(@RequestBody CaregiverReservationRequest request) {
+        return null;
+    }
+
+    //간병인 예약 거절 -> 간병인이 거절하면 state 3
+    @PostMapping("/careDeny")
+    public ResponseEntity<RestResult<Object>> reservationDeny(@RequestBody CaregiverReservationRequest request) {
+        return null;
+    }
+
+    //예약 공개요청 상태 -> 특정 간병인 아닌 전체 대상 간병인 요청 상태 -> state 4
+    @PostMapping("/careRequestChange")
+    public ResponseEntity<RestResult<Object>> reservationToAll(@RequestBody CaregiverReservationRequest request) {
+        return null;
     }
 
     @GetMapping("/{reservationId}")

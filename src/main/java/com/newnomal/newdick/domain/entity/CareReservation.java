@@ -12,7 +12,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder @Getter @Setter
-@Table(name = "CareReservationTable")
+@Table(name = "CareReservationTable",
+        indexes = {
+                @Index(name = "idx_user", columnList = "user_id"),
+                @Index(name = "idx_caregiver", columnList = "caregiver_id")
+                })
 public class CareReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +33,7 @@ public class CareReservation {
     private Caregiver caregiver;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+    private Integer state = 0;//간병 등록상태 0 간병인 허가 상태 1 간병인 거절 상태 2
 
     private String patientName;
     private String patientGender;

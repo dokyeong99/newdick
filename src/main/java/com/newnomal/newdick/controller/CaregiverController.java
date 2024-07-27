@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/caregiver")
+@CrossOrigin("*")
 public class CaregiverController {
     private final CaregiverService caregiverService;
 
