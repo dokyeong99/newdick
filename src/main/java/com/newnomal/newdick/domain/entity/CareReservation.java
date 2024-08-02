@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -23,17 +24,18 @@ public class CareReservation {
     private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Integer dailyStartTime;
-    private Integer dailyEndTime;
+    private LocalTime dailyStartTime;
+    private LocalTime dailyEndTime;
     private String reservationReason;
-    private String reservationRequest;
-    private String reservationStatus;
     private String reservationLocation;
+    private String diseaseName;
     @ManyToOne(fetch = FetchType.LAZY)
     private Caregiver caregiver;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    private Integer state = 0;//간병 등록상태 0 간병인 허가 상태 1 간병인 거절 상태 2
+    private Integer state;//간병 등록상태 0 간병인 요청 상태 1 간병인 허가 상태 2 간병인 거부 상태 3
+    private String UnAcceptedBehavior;
+    private String RecentDiseaseData;
 
     private String patientName;
     private String patientGender;
@@ -47,12 +49,17 @@ public class CareReservation {
         this.dailyStartTime = careReservationRequest.getDailyStartTime();
         this.dailyEndTime = careReservationRequest.getDailyEndTime();
         this.reservationReason = careReservationRequest.getReservationReason();
-        this.reservationRequest = careReservationRequest.getReservationRequest();
+        this.state = 0;
+        this.diseaseName = careReservationRequest.getDiseaseName();
+        this.reservationLocation = careReservationRequest.getReservationLocation();
+        this.UnAcceptedBehavior = careReservationRequest.getUnAcceptedBehavior();
+        this.RecentDiseaseData = careReservationRequest.getRecentDiseaseData();
         this.patientName = careReservationRequest.getPatientName();
         this.patientGender = careReservationRequest.getPatientGender();
         this.patientBirthDate = careReservationRequest.getPatientBirthDate();
         this.patientHeight = careReservationRequest.getPatientHeight();
         this.patientWeight = careReservationRequest.getPatientWeight();
+        this.user = User.builder().id(careReservationRequest.getUserId()).build();
     }
 
 }

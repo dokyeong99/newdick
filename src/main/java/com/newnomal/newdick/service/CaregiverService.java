@@ -55,6 +55,14 @@ public class CaregiverService {
         return ResponseEntity.ok(new RestResult<>("SUCCESS", caregiverResponse));
     }
 
+    public ResponseEntity<RestResult<Object>> getCaregiversByIds(List<Long> caregiverIds) {
+        List<Caregiver> caregivers = caregiverRepository.findAllByIdIn(caregiverIds);
+        List<CaregiverResponse> caregiverResponses = caregivers.stream()
+                .map(caregiver -> new CaregiverResponse(caregiver, "생성자 분별용 null Text"))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(new RestResult<>("SUCCESS", caregiverResponses));
+    }
+
     public ResponseEntity<RestResult<Object>> deleteCaregiver(@PathVariable Long caregiverId) {
         try {
             caregiverRepository.deleteById(caregiverId);

@@ -54,8 +54,6 @@ public class Caregiver {
         this.phone = caregiverSignUpRequest.getPhone();
         this.gender = caregiverSignUpRequest.getGender();
         this.birthDate = LocalDate.parse(caregiverSignUpRequest.getBirthDate());
-        this.address = caregiverSignUpRequest.getAddress();
-        this.city = caregiverSignUpRequest.getCity();
         this.careerDescription = caregiverSignUpRequest.getCareerDescription();
     }
 

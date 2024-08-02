@@ -6,7 +6,7 @@ import com.newnomal.newdick.domain.entity.WorkHistory;
 public class WorkHistoryResponse {
     private Long id;
     private String workHistory;
-    private Integer workHistoryPeriod;
+    private String workHistoryPeriod;
 
     public WorkHistoryResponse(WorkHistory workHistory) {
         this.id = workHistory.getId();

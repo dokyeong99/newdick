@@ -4,10 +4,12 @@ import com.newnomal.newdick.common.RestError;
 import com.newnomal.newdick.common.RestResult;
 import com.newnomal.newdick.domain.entity.Caregiver;
 import com.newnomal.newdick.domain.entity.User;
+import com.newnomal.newdick.domain.entity.WorkHistory;
 import com.newnomal.newdick.domain.request.CaregiverLoginRequest;
 import com.newnomal.newdick.domain.request.CaregiverSignUpRequest;
 import com.newnomal.newdick.domain.request.UserLoginRequest;
 import com.newnomal.newdick.domain.request.UserSignUpRequest;
+import com.newnomal.newdick.domain.response.CaregiverResponse;
 import com.newnomal.newdick.repositroy.CaregiverRepository;
 import com.newnomal.newdick.repositroy.UserRepository;
 import jakarta.transaction.Transactional;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -27,6 +30,7 @@ public class AuthService {
     private final CaregiverRepository caregiverRepository;
     private final UserRepository userRepository;
     private final OpenAIApiService openAIApiService;
+    private final WorkHistoryService workHistoryService;
 
     //1. 이메일 중복 체크 ->에러 시에 에러 반환
     //2. 데이터 삽입
@@ -53,11 +57,18 @@ public class AuthService {
         //워드 임배딩 openapi로 가져오기
         //
         List<Double> embedingVector = openAIApiService.generateCareerDescriptionVector(caregiverSignUpRequest.getCareerDescription());
+        List<WorkHistory> workHistories= workHistoryService.saveWorkHistory(caregiverSignUpRequest);
+
         Caregiver beforeSave = new Caregiver(caregiverSignUpRequest);
         beforeSave.setCareerDescriptionVector(embedingVector);
+        beforeSave.setWorkHistories(workHistories);
+
         Caregiver caregiver = caregiverRepository.save(beforeSave);
         return ResponseEntity.ok(new RestResult<>("success",caregiver.getId()));
     }
+
+
+
 
     //1. 이메일, 비밀번호 체크 ->에러 시에 에러 반환
     //2. patient아이디 반환

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CaregiverRepository extends JpaRepository<Caregiver, Long> {
@@ -15,4 +16,5 @@ public interface CaregiverRepository extends JpaRepository<Caregiver, Long> {
     public Optional<Caregiver> findByEmailAndPassword(String email, String password);
     @NotNull
     public Optional<Caregiver> findById(@NotNull Long caregiverId);
+    List<Caregiver> findAllByIdIn(List<Long> ids);
 }

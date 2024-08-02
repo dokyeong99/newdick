@@ -2,6 +2,7 @@ package com.newnomal.newdick.domain.entity;
 
 
 import com.newnomal.newdick.domain.request.WorkHistoryRequest;
+import com.newnomal.newdick.domain.request.WorkHistorySignUpRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,11 +20,16 @@ public class WorkHistory {
     @ManyToOne(fetch = FetchType.LAZY)
     private Caregiver caregiver;
     private String workHistory;
-    private Integer workHistoryPeriod;
+    private String workHistoryPeriod;
 
     public WorkHistory(WorkHistoryRequest workHistoryRequest){
         this.workHistory = workHistoryRequest.getWorkHistory();
         this.workHistoryPeriod = workHistoryRequest.getWorkHistoryPeriod();
         this.caregiver = Caregiver.builder().id(workHistoryRequest.getCaregiverId()).build();
     }
+    public WorkHistory(WorkHistorySignUpRequest workHistorySignUpRequest){
+        this.workHistory = workHistorySignUpRequest.getWorkHistory();
+        this.workHistoryPeriod = workHistorySignUpRequest.getWorkHistoryPeriod();
+    }
+
 }

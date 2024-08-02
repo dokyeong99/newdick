@@ -21,4 +21,10 @@ public interface CareReservationRepository extends JpaRepository<CareReservation
     @EntityGraph(attributePaths = {"caregiver", "user"})
     Optional<CareReservation> findById(@NotNull Long id);
 
+    @EntityGraph(attributePaths = {"caregiver", "user"})
+    Page<CareReservation> findByCaregiverIdAndState(Long caregiverId,Integer state ,Pageable pageable);
+
+    @EntityGraph(attributePaths = {"caregiver", "user"})
+    Page<CareReservation> findByState(Integer state ,Pageable pageable);
+
 }

@@ -19,33 +19,33 @@ public class CareReservationController {
     private final CareReservationService careReservationService;
 
     //간병 예약 등록 -> 간병인 요청 전 상태 state 0
-    @PostMapping("/careReservation")
+    @PostMapping("/careReservationInput")
     public ResponseEntity<RestResult<Object>> createReservation(@RequestBody CareReservationRequest request) {
         return careReservationService.createReservation(request);
     }
 
     //간병인 예약 요청 -> 특정 간병인 요청 상태 state 1
-    @PostMapping("/careRequest")
+    @PostMapping("/careReservationRequest")
     public ResponseEntity<RestResult<Object>> reservationCaregiverRequest(@RequestBody CaregiverReservationRequest request) {
-        return null;
+        return careReservationService.reservationCaregiverRequest(request);
     }
 
     //간병인 예약 등록 -> 간병인이 허가하면 state 2
-    @PostMapping("/careAccept")
+    @PostMapping("/careReservationAccept")
     public ResponseEntity<RestResult<Object>> reservationAccept(@RequestBody CaregiverReservationRequest request) {
-        return null;
+        return careReservationService.reservationAccept(request);
     }
 
     //간병인 예약 거절 -> 간병인이 거절하면 state 3
-    @PostMapping("/careDeny")
+    @PostMapping("/careReservationDeny")
     public ResponseEntity<RestResult<Object>> reservationDeny(@RequestBody CaregiverReservationRequest request) {
-        return null;
+        return careReservationService.reservationDeny(request);
     }
 
     //예약 공개요청 상태 -> 특정 간병인 아닌 전체 대상 간병인 요청 상태 -> state 4
-    @PostMapping("/careRequestChange")
+    @PostMapping("/careRequestAll")
     public ResponseEntity<RestResult<Object>> reservationToAll(@RequestBody CaregiverReservationRequest request) {
-        return null;
+        return careReservationService.reservationToAll(request);
     }
 
     @GetMapping("/{reservationId}")
@@ -64,6 +64,20 @@ public class CareReservationController {
             @PathVariable Long caregiverId, Pageable pageable) {
         return careReservationService.getReservationsByCaregiverId(caregiverId, pageable);
     }
+
+    @GetMapping("/caregiver/requested/{caregiverId}")
+    public ResponseEntity<RestResult<Page<CareReservationResponse>>> getRequestedReservationsByCaregiverId(
+            @PathVariable Long caregiverId, Pageable pageable) {
+        return careReservationService.getRequestedReservationsByCaregiverId(caregiverId, pageable);
+    }
+
+    @GetMapping("/caregiver/allrequested/{caregiverId}")
+    public ResponseEntity<RestResult<Page<CareReservationResponse>>> getAllRequestedReservationsByCaregiverId(
+            @PathVariable Long caregiverId, Pageable pageable) {
+        return careReservationService.getAllRequestedReservationsByCaregiverId(caregiverId, pageable);
+    }
+
+
 
     @PutMapping("/{reservationId}")
     public ResponseEntity<RestResult<Object>> updateReservation(@PathVariable Long reservationId, @RequestBody CareReservationRequest request) {

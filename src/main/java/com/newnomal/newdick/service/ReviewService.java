@@ -7,6 +7,7 @@ import com.newnomal.newdick.domain.entity.Review;
 import com.newnomal.newdick.domain.entity.User;
 import com.newnomal.newdick.domain.request.ReviewRequest;
 import com.newnomal.newdick.domain.response.ReviewResponse;
+import com.newnomal.newdick.repositroy.CaregiverRepository;
 import com.newnomal.newdick.repositroy.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserService userService;
     private final CaregiverService caregiverService;
+    private final CaregiverRepository caregiverRepository;
 
     public ResponseEntity<RestResult<Object>> createReview(ReviewRequest request) {
         ResponseEntity<RestResult<Object>> userResponse = userService.getUserById(request.getUserId());
@@ -43,15 +45,15 @@ public class ReviewService {
         }
 
         Review review = new Review();
-        review.setUser((User) ((RestResult<?>) userResponse.getBody()).getData());
-        review.setCaregiver((Caregiver) ((RestResult<?>) caregiverResponse.getBody()).getData());
+        review.setUser(User.builder().id(request.getUserId()).build());
+        review.setCaregiver(Caregiver.builder().id(request.getCaregiverId()).build());
         review.setRating(request.getRating());
         review.setComment(request.getComment());
         review.setCreatedAt(LocalDateTime.now());
 
         review = reviewRepository.save(review);
 
-        Caregiver caregiver = review.getCaregiver();
+        Caregiver caregiver = caregiverRepository.findById(request.getCaregiverId()).get();
         caregiver.addReview(review.getRating());
 
         return ResponseEntity.ok(new RestResult<>("SUCCESS", new ReviewResponse(review)));

@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -21,12 +22,11 @@ public class CareReservationResponse {
     private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Integer dailyStartTime;
-    private Integer dailyEndTime;
+    private LocalTime dailyStartTime;
+    private LocalTime dailyEndTime;
     private String reservationReason;
-    private String reservationRequest;
-    private String reservationStatus;
     private String reservationLocation;
+    private String diseaseName;
     private CaregiverResponse caregiverResponse;
     private UserResponse userResponse;
     private String patientName;
@@ -34,6 +34,9 @@ public class CareReservationResponse {
     private LocalDate patientBirthDate;
     private String patientHeight;
     private String patientWeight;
+    private Integer state;
+    private String UnAcceptedBehavior;
+    private String RecentDiseaseData;
 
     public CareReservationResponse(CareReservation careReservation) {
         this.id = careReservation.getId();
@@ -42,9 +45,8 @@ public class CareReservationResponse {
         this.dailyStartTime = careReservation.getDailyStartTime();
         this.dailyEndTime = careReservation.getDailyEndTime();
         this.reservationReason = careReservation.getReservationReason();
-        this.reservationRequest = careReservation.getReservationRequest();
-        this.reservationStatus = careReservation.getReservationStatus();
         this.reservationLocation = careReservation.getReservationLocation();
+        this.diseaseName = careReservation.getDiseaseName();
         this.caregiverResponse = new CaregiverResponse(careReservation.getCaregiver());
         this.userResponse = new UserResponse(careReservation.getUser());
         this.patientName = careReservation.getPatientName();
@@ -52,7 +54,8 @@ public class CareReservationResponse {
         this.patientBirthDate = careReservation.getPatientBirthDate();
         this.patientHeight = careReservation.getPatientHeight();
         this.patientWeight = careReservation.getPatientWeight();
-
+        this.state = careReservation.getState();
+        this.UnAcceptedBehavior = careReservation.getUnAcceptedBehavior();
 
     }
 

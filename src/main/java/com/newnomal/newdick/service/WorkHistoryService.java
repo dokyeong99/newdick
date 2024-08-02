@@ -3,15 +3,19 @@ package com.newnomal.newdick.service;
 import com.newnomal.newdick.common.RestError;
 import com.newnomal.newdick.common.RestResult;
 import com.newnomal.newdick.domain.entity.WorkHistory;
+import com.newnomal.newdick.domain.request.CaregiverSignUpRequest;
 import com.newnomal.newdick.domain.request.WorkHistoryRequest;
+import com.newnomal.newdick.domain.request.WorkHistorySignUpRequest;
 import com.newnomal.newdick.domain.response.WorkHistoryResponse;
 import com.newnomal.newdick.repositroy.WorkHistoryRepository;
 import com.newnomal.newdick.service.CaregiverService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.jdbc.Work;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,6 +25,15 @@ import java.util.stream.Collectors;
 public class WorkHistoryService {
     private final WorkHistoryRepository workHistoryRepository;
     private final CaregiverService caregiverService;
+
+    public List<WorkHistory> saveWorkHistory(CaregiverSignUpRequest caregiverSignUpRequest) {
+        List<WorkHistory> workHistories = new ArrayList<>();
+        List<WorkHistorySignUpRequest> workHistorySignUpRequests = caregiverSignUpRequest.getWorkHistory();
+        for(WorkHistorySignUpRequest workHistorySignUpRequest:workHistorySignUpRequests){
+            workHistories.add(workHistoryRepository.save(new WorkHistory(workHistorySignUpRequest)));
+        }
+        return workHistories;
+    }
 
     public ResponseEntity<RestResult<Object>> createWorkHistory(WorkHistoryRequest workHistoryRequest) {
         ResponseEntity<RestResult<Object>> caregiverResponse = caregiverService.getCaregiverById(workHistoryRequest.getCaregiverId());

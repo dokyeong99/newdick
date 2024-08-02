@@ -3,6 +3,7 @@ package com.newnomal.newdick.domain.request;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -10,22 +11,23 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class CareReservationRequest {
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private Integer dailyStartTime;
-    private Integer dailyEndTime;
-    private String reservationReason;
-    private String reservationRequest;
-    private String reservationLocation;
-    private Long userId;
     private String patientName;
-    private String patientGender;
     private LocalDate patientBirthDate;
     private String patientHeight;
     private String patientWeight;
+    private String patientGender;
 
-    //new field
     private String diseaseName = "";
+    private String reservationLocation;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalTime dailyStartTime;
+    private LocalTime dailyEndTime;
+
+    private String reservationReason;
     private String UnAcceptedBehavior = "";
     private String RecentDiseaseData = "";
+
+    //new field
+    private Long userId;
 }

@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +32,11 @@ public class CaregiverController {
     @DeleteMapping("/caregiverId/{caregiverId}")
     public ResponseEntity<RestResult<Object>> deleteCaregiver(@PathVariable Long caregiverId) {
         return caregiverService.deleteCaregiver(caregiverId);
+    }
+
+    @PostMapping("/byIds")
+    public ResponseEntity<RestResult<Object>> getCaregiversByIds(@RequestBody List<Long> caregiverIds) {
+        return caregiverService.getCaregiversByIds(caregiverIds);
     }
 }
 

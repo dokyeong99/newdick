@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -171,5 +172,20 @@ public class CareReservationService {
         reservation.setCaregiver(Caregiver.builder().id(request.getCaregiverId()).build());
         reservation.setState(4);
         return ResponseEntity.ok(new RestResult<>("OK","전체 간병인 추천 설정 완료"));
+    }
+
+
+    public ResponseEntity<RestResult<Page<CareReservationResponse>>> getRequestedReservationsByCaregiverId(
+            @PathVariable Long caregiverId, Pageable pageable) {
+        Page<CareReservation> reservations = careReservationRepository.findByCaregiverIdAndState(caregiverId,1, pageable);
+        Page<CareReservationResponse> responses = reservations.map(CareReservationResponse::new);
+        return ResponseEntity.ok(new RestResult<>("SUCCESS", responses));
+    }
+
+    public ResponseEntity<RestResult<Page<CareReservationResponse>>> getAllRequestedReservationsByCaregiverId(
+            @PathVariable Long caregiverId, Pageable pageable) {
+        Page<CareReservation> reservations = careReservationRepository.findByState(4, pageable);
+        Page<CareReservationResponse> responses = reservations.map(CareReservationResponse::new);
+        return ResponseEntity.ok(new RestResult<>("SUCCESS", responses));
     }
 }

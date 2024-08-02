@@ -44,12 +44,13 @@ public class CaregiverResponse {
         this.certifications = caregiver.getCertifications();
         this.careReservations = caregiver.getCareReservations().stream().map(CareReservationResponse::new).toList();
         this.averageRating = caregiver.getAverageRating();
+        this.caregiverWorkHistories = caregiver.getWorkHistories();
     }
 
     public CaregiverResponse(Caregiver entity) {
-        this.id = entity.getId();
-        this.name = entity.getName();
-
+        if (entity != null) {this.id = entity.getId();
+                            this.name = entity.getName();
+        }
     }
 
 }

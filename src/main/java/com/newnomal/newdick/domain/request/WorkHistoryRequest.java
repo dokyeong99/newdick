@@ -10,5 +10,5 @@ import lombok.*;
 public class WorkHistoryRequest {
     private Long caregiverId;
     private String workHistory;
-    private Integer workHistoryPeriod;
+    private String workHistoryPeriod;
 }
