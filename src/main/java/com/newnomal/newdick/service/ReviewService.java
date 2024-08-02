@@ -74,6 +74,12 @@ public class ReviewService {
         return ResponseEntity.ok(new RestResult<>("SUCCESS", responses));
     }
 
+    public ResponseEntity<RestResult<Page<ReviewResponse>>> getReviewsByUserId(Long caregiverId, Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findByUserId(caregiverId, pageable);
+        Page<ReviewResponse> responses = reviews.map(ReviewResponse::new);
+        return ResponseEntity.ok(new RestResult<>("SUCCESS", responses));
+    }
+
     public ResponseEntity<RestResult<Object>> updateReview(Long reviewId, ReviewRequest request) {
         Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
         if (reviewOptional.isEmpty()) {

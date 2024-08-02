@@ -33,6 +33,12 @@ public class ReviewController {
         return reviewService.getReviewsByCaregiverId(caregiverId, pageable);
     }
 
+    @GetMapping("/userId/{userId}")
+    public ResponseEntity<RestResult<Page<ReviewResponse>>> getReviewsByUserId(
+            @PathVariable Long userId, Pageable pageable) {
+        return reviewService.getReviewsByUserId(userId, pageable);
+    }
+
     @PutMapping("/{reviewId}")
     public ResponseEntity<RestResult<Object>> updateReview(@PathVariable Long reviewId, @RequestBody ReviewRequest request) {
         return reviewService.updateReview(reviewId, request);
