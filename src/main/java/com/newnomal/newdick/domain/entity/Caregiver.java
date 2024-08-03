@@ -1,6 +1,7 @@
 package com.newnomal.newdick.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.newnomal.newdick.domain.converter.DoubleListToJsonConverter;
 import com.newnomal.newdick.domain.request.CaregiverSignUpRequest;
 import jakarta.persistence.*;
@@ -29,6 +30,7 @@ public class Caregiver {
     private String city;
     private String careerDescription;//elastic search랑 연동되는 파라미터
 
+    @JsonIgnore
     @Convert(converter = DoubleListToJsonConverter.class)
     @Column(columnDefinition = "JSON")
     private List<Double> careerDescriptionVector;

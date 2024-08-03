@@ -29,7 +29,7 @@ public class CaregiverResponse {
     private String careerDescription;//elastic search랑 연동되는 파라미터
     private List<Certification> certifications;//인증 이후에 업데이트
     private List<CareReservationResponse> careReservations;
-    private List<WorkHistory> caregiverWorkHistories;
+    private List<WorkHistoryResponse> caregiverWorkHistories;
     private Double averageRating;
 
     public CaregiverResponse(Caregiver caregiver, String noData) {
@@ -42,9 +42,8 @@ public class CaregiverResponse {
         this.city = caregiver.getCity();
         this.careerDescription = caregiver.getCareerDescription();
         this.certifications = caregiver.getCertifications();
-        this.careReservations = caregiver.getCareReservations().stream().map(CareReservationResponse::new).toList();
         this.averageRating = caregiver.getAverageRating();
-        this.caregiverWorkHistories = caregiver.getWorkHistories();
+        this.caregiverWorkHistories = caregiver.getWorkHistories().stream().map(workHistory -> new WorkHistoryResponse(workHistory)).toList();
     }
 
     public CaregiverResponse(Caregiver entity) {

@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class OpenAIApiService {
 
-    private String openAiApiKey="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";
+    private String openAiApiKey="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";
 
 
     public List<Double>  generateCareerDescriptionVector(String careerDescription) {
